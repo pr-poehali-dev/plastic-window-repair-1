@@ -351,8 +351,7 @@ const Index = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-lg mb-1">Телефон</h3>
-                      <p className="text-muted-foreground">+7 (999) 123-45-67</p>
-                      <p className="text-muted-foreground">+7 (999) 765-43-21</p>
+                      <p className="text-muted-foreground">8 (904) 145-49 офис</p>
                     </div>
                   </div>
                 </Card>
@@ -416,7 +415,7 @@ const Index = () => {
             <div>
               <h3 className="font-bold mb-4">Контакты</h3>
               <ul className="space-y-2 text-slate-400">
-                <li>+7 (999) 123-45-67</li>
+                <li>8 (904) 145-49 офис</li>
                 <li>info@eridan.ru</li>
                 <li>г. Москва, ул. Примерная, 123</li>
               </ul>
