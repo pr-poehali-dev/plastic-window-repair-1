@@ -29,19 +29,9 @@ const Index = () => {
 
   const products = [
     {
-      name: 'Краска для ПВХ',
-      price: 'от 1 200 ₽',
-      description: 'Специальная краска для пластиковых поверхностей',
-    },
-    {
-      name: 'Краска для дерева',
-      price: 'от 950 ₽',
-      description: 'Защитная краска для деревянных рам',
-    },
-    {
-      name: 'Грунтовка',
-      price: 'от 650 ₽',
-      description: 'Подготовка поверхности перед покраской',
+      name: 'Краски «Саяночки»',
+      price: 'Уточняйте цену',
+      description: 'Качественные краски для различных поверхностей',
     },
   ];
 
@@ -250,27 +240,55 @@ const Index = () => {
       {/* About */}
       <section id="about" className="py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-6">О компании</h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              ООО "Эридан" работает на рынке установки и ремонта пластиковых окон уже более 10 лет. За это время мы выполнили более 500 проектов и заслужили доверие наших клиентов благодаря качеству работ и профессиональному подходу.
-            </p>
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-6">О нас</h2>
+              <p className="text-xl text-muted-foreground mb-4">
+                ООО "Эридан" — это динамично развивающаяся компания, которая занимается предоставлением высококачественных услуг и товаров для разнообразных организаций.
+              </p>
+            </div>
+            
+            <div className="prose prose-lg max-w-none mb-12 text-left">
+              <p className="text-base text-muted-foreground leading-relaxed mb-6">
+                Наша основная миссия заключается в том, чтобы создавать комфортные и безопасные условия для работы и обучения, реализуя проекты как для частных клиентов, так и для муниципальных учреждений.
+              </p>
+              
+              <h3 className="text-2xl font-bold mb-4 text-foreground">Наши услуги</h3>
+              <p className="text-base text-muted-foreground mb-4">Мы работаем с:</p>
+              <ul className="space-y-3 mb-8 text-muted-foreground">
+                <li><strong className="text-foreground">Частными клиентами:</strong> Предлагаем индивидуальные решения, которые соответствуют уникальным потребностям и требованиям каждого заказчика.</li>
+                <li><strong className="text-foreground">Муниципальными учреждениями:</strong> Сотрудничаем с образовательными, медицинскими и культурными учреждениями, предоставляя качественные услуги и товары, соответствующие современным стандартам.</li>
+                <li><strong className="text-foreground">Организациями:</strong> Обеспечиваем предприятия всем необходимым для эффективного и безопасного функционирования.</li>
+              </ul>
+              
+              <h3 className="text-2xl font-bold mb-4 text-foreground">Сертификация</h3>
+              <p className="text-base text-muted-foreground leading-relaxed mb-8">
+                Понимая важность качества и безопасности, ООО "Эридан" использует только сертифицированные материалы и продукты в области работы с детскими учреждениями. Это подтверждает, что наши товары и услуги соответствуют самым высоким стандартам и требованиям. Мы гордимся тем, что можем работать в такой чувствительной к качеству сфере, как работа с детьми.
+              </p>
+            </div>
+
             <div className="grid md:grid-cols-3 gap-8">
               <div className="p-6 bg-white rounded-xl shadow-md">
-                <Icon name="Award" className="text-primary mx-auto mb-4" size={48} />
-                <h3 className="font-bold text-xl mb-2">Сертифицированы</h3>
-                <p className="text-muted-foreground">Все специалисты имеют сертификаты</p>
+                <Icon name="Users" className="text-primary mx-auto mb-4" size={48} />
+                <h3 className="font-bold text-xl mb-2">Профессионализм</h3>
+                <p className="text-muted-foreground">Опытные специалисты с квалифицированной поддержкой</p>
               </div>
               <div className="p-6 bg-white rounded-xl shadow-md">
-                <Icon name="Clock" className="text-primary mx-auto mb-4" size={48} />
-                <h3 className="font-bold text-xl mb-2">Пунктуальность</h3>
-                <p className="text-muted-foreground">Соблюдаем все сроки работ</p>
+                <Icon name="Heart" className="text-primary mx-auto mb-4" size={48} />
+                <h3 className="font-bold text-xl mb-2">Индивидуальный подход</h3>
+                <p className="text-muted-foreground">Учитываем все пожелания и предложения клиентов</p>
               </div>
               <div className="p-6 bg-white rounded-xl shadow-md">
-                <Icon name="ThumbsUp" className="text-primary mx-auto mb-4" size={48} />
-                <h3 className="font-bold text-xl mb-2">Гарантия качества</h3>
-                <p className="text-muted-foreground">5 лет гарантии на все работы</p>
+                <Icon name="ShieldCheck" className="text-primary mx-auto mb-4" size={48} />
+                <h3 className="font-bold text-xl mb-2">Надежность</h3>
+                <p className="text-muted-foreground">Строгий контроль качества каждого проекта</p>
               </div>
+            </div>
+            
+            <div className="text-center mt-12">
+              <p className="text-lg font-semibold text-primary">
+                Миссия ООО "Эридан" — ваше комфортное и безопасное развитие!
+              </p>
             </div>
           </div>
         </div>
@@ -351,7 +369,8 @@ const Index = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-lg mb-1">Телефон</h3>
-                      <p className="text-muted-foreground">8 (904) 145-49 офис</p>
+                      <p className="text-muted-foreground">8 (902) 145-49-42 Офис</p>
+                      <p className="text-muted-foreground">8 (908) 654-95-25 Директор</p>
                     </div>
                   </div>
                 </Card>
@@ -362,8 +381,7 @@ const Index = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-lg mb-1">Email</h3>
-                      <p className="text-muted-foreground">info@eridan.ru</p>
-                      <p className="text-muted-foreground">zakaz@eridan.ru</p>
+                      <p className="text-muted-foreground">ooo-eridan_1@mail.ru</p>
                     </div>
                   </div>
                 </Card>
@@ -415,9 +433,9 @@ const Index = () => {
             <div>
               <h3 className="font-bold mb-4">Контакты</h3>
               <ul className="space-y-2 text-slate-400">
-                <li>8 (904) 145-49 офис</li>
-                <li>info@eridan.ru</li>
-                <li>г. Москва, ул. Примерная, 123</li>
+                <li>8 (902) 145-49-42 Офис</li>
+                <li>8 (908) 654-95-25 Директор</li>
+                <li>ooo-eridan_1@mail.ru</li>
               </ul>
             </div>
           </div>
