@@ -21,11 +21,6 @@ const Index = () => {
       title: 'Замена окон',
       description: 'Быстрая и качественная замена старых окон на новые',
     },
-    {
-      icon: 'ShieldCheck',
-      title: 'Ремонт окон',
-      description: 'Устранение неполадок, регулировка фурнитуры, замена уплотнителей',
-    },
   ];
 
   const products = [
@@ -424,7 +419,6 @@ const Index = () => {
               <ul className="space-y-2 text-slate-400">
                 <li><a href="#services" className="hover:text-white transition-colors">Установка окон</a></li>
                 <li><a href="#services" className="hover:text-white transition-colors">Замена окон</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Ремонт окон</a></li>
               </ul>
             </div>
             <div>
