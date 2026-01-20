@@ -16,6 +16,7 @@ interface Chat {
   userId: string;
   messages: Message[];
   lastMessage: Date;
+  userName?: string;
 }
 
 const Admin = () => {
@@ -25,6 +26,8 @@ const Admin = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [messageInput, setMessageInput] = useState('');
   const [unreadCount, setUnreadCount] = useState(0);
+  const [editingName, setEditingName] = useState(false);
+  const [newName, setNewName] = useState('');
 
   useEffect(() => {
     const authStatus = localStorage.getItem('admin_auth');
@@ -120,6 +123,25 @@ const Admin = () => {
     localStorage.setItem('admin_chats', JSON.stringify(updatedChats));
   };
 
+  const handleRenameUser = () => {
+    if (!selectedChat || !newName.trim()) return;
+
+    const updatedChats = chats.map(chat => {
+      if (chat.userId === selectedChat) {
+        return {
+          ...chat,
+          userName: newName.trim()
+        };
+      }
+      return chat;
+    });
+
+    setChats(updatedChats);
+    localStorage.setItem('admin_chats', JSON.stringify(updatedChats));
+    setEditingName(false);
+    setNewName('');
+  };
+
   const selectedChatData = chats.find(chat => chat.userId === selectedChat);
 
   if (!isAuthenticated) {
@@ -197,7 +219,7 @@ const Admin = () => {
                         : 'bg-white hover:bg-slate-50 border-slate-200'
                     }`}
                   >
-                    <div className="font-semibold">Пользователь {chat.userId.slice(0, 8)}</div>
+                    <div className="font-semibold">{chat.userName || `Пользователь ${chat.userId.slice(0, 8)}`}</div>
                     <div className="text-sm opacity-75">
                       {chat.messages[chat.messages.length - 1]?.text.slice(0, 50)}...
                     </div>
@@ -213,8 +235,42 @@ const Admin = () => {
           <Card className="md:col-span-2 flex flex-col">
             {selectedChat ? (
               <>
-                <div className="p-4 border-b bg-slate-50">
-                  <h3 className="font-bold">Чат с пользователем {selectedChat.slice(0, 8)}</h3>
+                <div className="p-4 border-b bg-slate-50 flex justify-between items-center">
+                  {editingName ? (
+                    <div className="flex gap-2 flex-1">
+                      <Input
+                        value={newName}
+                        onChange={(e) => setNewName(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleRenameUser()}
+                        placeholder="Введите имя"
+                        autoFocus
+                      />
+                      <Button onClick={handleRenameUser} size="sm">
+                        <Icon name="Check" size={16} />
+                      </Button>
+                      <Button onClick={() => {
+                        setEditingName(false);
+                        setNewName('');
+                      }} size="sm" variant="outline">
+                        <Icon name="X" size={16} />
+                      </Button>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className="font-bold">{selectedChatData?.userName || `Пользователь ${selectedChat.slice(0, 8)}`}</h3>
+                      <Button 
+                        onClick={() => {
+                          setEditingName(true);
+                          setNewName(selectedChatData?.userName || '');
+                        }} 
+                        size="sm" 
+                        variant="outline"
+                      >
+                        <Icon name="Edit" size={16} className="mr-1" />
+                        Переименовать
+                      </Button>
+                    </>
+                  )}
                 </div>
                 <div className="flex-1 overflow-y-auto p-4 space-y-3">
                   {selectedChatData?.messages.map((msg) => (
