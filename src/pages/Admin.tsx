@@ -87,7 +87,7 @@ const Admin = () => {
       userId: selectedChat
     };
 
-    setChats(prev => prev.map(chat => {
+    const updatedChats = chats.map(chat => {
       if (chat.userId === selectedChat) {
         return {
           ...chat,
@@ -96,23 +96,11 @@ const Admin = () => {
         };
       }
       return chat;
-    }));
+    });
 
+    setChats(updatedChats);
     setMessageInput('');
-
-    setTimeout(() => {
-      const updatedChats = chats.map(chat => {
-        if (chat.userId === selectedChat) {
-          return {
-            ...chat,
-            messages: [...chat.messages, newMessage],
-            lastMessage: new Date()
-          };
-        }
-        return chat;
-      });
-      localStorage.setItem('admin_chats', JSON.stringify(updatedChats));
-    }, 100);
+    localStorage.setItem('admin_chats', JSON.stringify(updatedChats));
   };
 
   const handleDeleteMessage = (messageId: string) => {
