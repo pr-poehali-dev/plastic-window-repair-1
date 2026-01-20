@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
+import ChatWidget from '@/components/ChatWidget';
 
 const Index = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
@@ -29,9 +30,24 @@ const Index = () => {
 
   const products = [
     {
-      name: 'Краски «Саяночка»',
+      name: 'Эмаль «Саяночка»',
       price: 'Уточняйте цену',
-      description: 'Качественные краски для различных поверхностей',
+      description: 'Эмалевые краски для внутренних и наружных работ',
+    },
+    {
+      name: 'Грунтовка «Саяночка»',
+      price: 'Уточняйте цену',
+      description: 'Грунтовка для подготовки поверхностей перед покраской',
+    },
+    {
+      name: 'Пропитка «Саяночка»',
+      price: 'Уточняйте цену',
+      description: 'Защитная пропитка для деревянных поверхностей',
+    },
+    {
+      name: 'Потолочная краска «Саяночка»',
+      price: 'Уточняйте цену',
+      description: 'Специальная краска для потолков с высокой укрывистостью',
     },
   ];
 
@@ -180,7 +196,7 @@ const Index = () => {
             <h2 className="text-4xl font-bold mb-4">Краска Саяночка</h2>
             <p className="text-xl text-muted-foreground">Профессиональные материалы для окон</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product, index) => (
               <Card key={index} className="hover:shadow-xl transition-shadow">
                 <CardHeader>
@@ -193,8 +209,8 @@ const Index = () => {
                 </CardHeader>
                 <CardContent>
                   <Button className="w-full bg-secondary hover:bg-secondary/90">
-                    <Icon name="ShoppingCart" size={18} className="mr-2" />
-                    В корзину
+                    <Icon name="CheckCircle" size={18} className="mr-2" />
+                    Выбрать
                   </Button>
                 </CardContent>
               </Card>
@@ -374,6 +390,7 @@ const Index = () => {
                     <div>
                       <h3 className="font-bold text-lg mb-1">Email</h3>
                       <p className="text-muted-foreground">ooo-eridan_1@mail.ru</p>
+                      <p className="text-muted-foreground">steklo_master38@mail.ru</p>
                     </div>
                   </div>
                 </Card>
@@ -429,6 +446,7 @@ const Index = () => {
                 <li>8 (902) 145-49-42 Офис</li>
                 <li>8 (908) 654-95-25 Директор</li>
                 <li>ooo-eridan_1@mail.ru</li>
+                <li>steklo_master38@mail.ru</li>
               </ul>
             </div>
           </div>
@@ -437,6 +455,7 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      <ChatWidget />
     </div>
   );
 };
