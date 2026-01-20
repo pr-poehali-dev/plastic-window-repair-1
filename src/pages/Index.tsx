@@ -190,7 +190,6 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Краска Саяночка</h2>
-            <p className="text-xl text-muted-foreground">Профессиональные материалы для окон</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product, index) => (
@@ -440,6 +439,7 @@ const Index = () => {
             <div>
               <h3 className="font-bold mb-4">Контакты</h3>
               <ul className="space-y-2 text-slate-400">
+                <li>+7 950 130 7721 Ремонт и строительство</li>
                 <li>8 (902) 145-49-42 Офис</li>
                 <li>8 (908) 654-95-25 Директор</li>
                 <li>ooo-eridan_1@mail.ru</li>
