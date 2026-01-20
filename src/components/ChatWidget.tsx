@@ -40,11 +40,12 @@ const ChatWidget = () => {
       
       if (myChat && myChat.messages.length > 0) {
         const adminMessages = myChat.messages.filter((msg: Message) => msg.from === 'admin');
-        const lastAdminMsg = adminMessages[adminMessages.length - 1];
         
-        if (lastAdminMsg && !messages.some(m => m.text === lastAdminMsg.text && !m.isBot)) {
-          setMessages(prev => [...prev, { text: lastAdminMsg.text, isBot: true }]);
-        }
+        adminMessages.forEach((adminMsg: Message) => {
+          if (!messages.some(m => m.text === adminMsg.text && m.isBot)) {
+            setMessages(prev => [...prev, { text: adminMsg.text, isBot: true }]);
+          }
+        });
       }
     }, 2000);
 
