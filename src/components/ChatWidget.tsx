@@ -1,8 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
+
+interface Message {
+  id: string;
+  text: string;
+  timestamp: Date;
+  from: 'user' | 'admin';
+  userId: string;
+}
+
+interface Chat {
+  userId: string;
+  messages: Message[];
+  lastMessage: Date;
+}
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,12 +24,67 @@ const ChatWidget = () => {
     { text: 'Здравствуйте! Чем могу помочь?', isBot: true }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [userId] = useState(() => {
+    let id = localStorage.getItem('chat_user_id');
+    if (!id) {
+      id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('chat_user_id', id);
+    }
+    return id;
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const chats = JSON.parse(localStorage.getItem('admin_chats') || '[]');
+      const myChat = chats.find((chat: Chat) => chat.userId === userId);
+      
+      if (myChat && myChat.messages.length > 0) {
+        const adminMessages = myChat.messages.filter((msg: Message) => msg.from === 'admin');
+        const lastAdminMsg = adminMessages[adminMessages.length - 1];
+        
+        if (lastAdminMsg && !messages.some(m => m.text === lastAdminMsg.text && !m.isBot)) {
+          setMessages(prev => [...prev, { text: lastAdminMsg.text, isBot: true }]);
+        }
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [userId, messages]);
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
 
-    setMessages([...messages, { text: inputValue, isBot: false }]);
+    const userMessage = { text: inputValue, isBot: false };
+    setMessages([...messages, userMessage]);
     setInputValue('');
+
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      text: inputValue,
+      timestamp: new Date(),
+      from: 'user',
+      userId: userId
+    };
+
+    const chats: Chat[] = JSON.parse(localStorage.getItem('admin_chats') || '[]');
+    const existingChatIndex = chats.findIndex(chat => chat.userId === userId);
+
+    if (existingChatIndex !== -1) {
+      chats[existingChatIndex].messages.push(newMessage);
+      chats[existingChatIndex].lastMessage = new Date();
+    } else {
+      chats.push({
+        userId: userId,
+        messages: [newMessage],
+        lastMessage: new Date()
+      });
+    }
+
+    localStorage.setItem('admin_chats', JSON.stringify(chats));
+
+    const unreadCount = parseInt(localStorage.getItem('admin_unread_count') || '0');
+    localStorage.setItem('admin_unread_count', (unreadCount + 1).toString());
+    localStorage.setItem('admin_new_message', Date.now().toString());
 
     setTimeout(() => {
       setMessages(prev => [...prev, {

@@ -24,6 +24,8 @@ const Admin = () => {
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [messageInput, setMessageInput] = useState('');
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const authStatus = localStorage.getItem('admin_auth');
@@ -32,6 +34,26 @@ const Admin = () => {
       loadChats();
     }
   }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const interval = setInterval(() => {
+      loadChats();
+      const count = parseInt(localStorage.getItem('admin_unread_count') || '0');
+      setUnreadCount(count);
+
+      const lastMessage = localStorage.getItem('admin_new_message');
+      if (lastMessage && Date.now() - parseInt(lastMessage) < 5000) {
+        setShowNotification(true);
+        const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZSA4NVLDn77BdGAg+ltryxnMlBSl+zPLaizsIGGS57OihUBELTKXh8bllHAU2jdXzzn0pBSd6yPDdkUAKE1+z6OyrWBQLRp/g8r5uIQYwiM/z1YU1Bh1rv+/mnUsODFOv5/CwXRgIPZbZ88l2JgYrfsvy2oo6CB5sueDpoVARDEyl4PG3aR0FN43V88+AKgUneMnw3Y9AChRfsujsqlgUC0af4PK+biEGMIjP89WFNQYda7/v5p1LDgxTr+fwsF0YCD2W2fPJdiYGK37L8tuJOQkdbbjv6Z9QEA1MpN/xsmsZCDmO1vPPgiwFKHfJ8N6PQAoUXrPo7KpYFAtGnt/yvm4hBjCIz/PVhTUGHWq/7+adSw4MU6/n8LBdGAg9ltrzyncnBSt9y/LbizsJHW+37+mjTxENTKTf8bBqGgg6jtXzz4MsBSh2yfDejkAKFF6z6OyqWBQLRp7f8r1uIQYwiM/z1YU1Bh1qv+/mnUsODFOv5/CwXRgIPZbZ88p3JwUrfcvy2oo7CR1wuO/po08RDUyj3/GwahsIOo7V88+DLAUodsnw3o5AChRes+jsqlgVC0ae3/K9biEGMIjP89WFNQYdar/v5p1LDgxTr+fwsF0YCD2W2fPKdycFK37M8tqLOwkdcLjv6aNPEQ1Mo9/xsGobCDqO1vPPgywFKHbJ8N6OQAoUXrPo7KpYFAtGnt/yvm4hBjCIz/PVhTUGHWq/7+adSw4MU6/n8LBdGAg9ltrzyncnBSt+zPLaizsJHXC47+mjTxENTKPf8bBqGwg6jtbzz4MsBSh2yfDejkAKFF6z6OyqWBQLRp7f8r5uIQYwiM/z1YU1Bh1qv+/mnUsODFOv5/CwXRgIPZbZ88p3JwUrfszy2os7CR1wuO/po08RDUyj3/GwahsIOo7W88+DLAUodsnw3o5AChRes+jsqlgUC0ae3/K+biEGMIjP89WFNQYdar/v5p1LDgxTr+fwsF0YCD2W2fPKdycFK37M8tqLOwkdcLjv6aNPEQ1Mo9/xsGobCDqO1vPPgywFKHbJ8N6OQAoUXrPo7KpYFAtGnt/yvm4hBjCIz/PVhTUGHWq/7+adSw4MU6/n8LBdGAg9ltnzyrcnBSt+zPLaizsJHXC47+mjTxENTKPf8bBqGwg6jtbzz4MsBSh2yfDejkAKFF6z6OyqWBQLRp7f8r5uIQYwiM/z1YU1Bh1qv+/mnUsODFOv5/CwXRgIPZbZ88p3JwUrfszy2os7CR1wuO/po08RDUyj3/GwahsIOo7W88+DLAUodsnw3o5AChRes+jsqlgUC0ae3/K+biEGMIjP89WFNQYdar/v5p1LDgxTr+fwsF0YCD2W2fPKdycFK37M8tqLOwkdcLjv6aNPEQ1Mo9/xsGobCDqO1vPPgywFKHbJ8N6OQAoUXrPo7KpYFAtGnt/yvm4hBjCIz/PVhTUGHWq/7+adSw4MU6/n8LBdGAg9ltnzyrcnBSt+zPLaizsJHXC47+mjTxENTKPf8bBqGwg6jtbzz4MsBSh2yfDejkAKFF6z6OyqWBQLRp7f8r5uIQYwiM/z1YU1Bh1qv+/mnUsODFOv5/CwXRgIPZbZ88p3JwUrfszy2os7CR1wuO/po08RDUyj3/GwahsIOo7W88+DLAUodsnw3o5AChRes+jsqlgUC0ae3/K+biEGMIjP89WFNQYdar/v5p1LDgxTr+fwsF0YCD2W2fPKdycFK37M8tqLOwkdcLjv6aNPEQ1Mo... [truncated]
+        audio.play().catch(() => {});
+        setTimeout(() => setShowNotification(false), 5000);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isAuthenticated]);
 
   const loadChats = () => {
     const storedChats = localStorage.getItem('admin_chats');
@@ -131,10 +153,40 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-slate-100">
+      {showNotification && (
+        <div className="fixed top-4 right-4 z-50 animate-slide-in">
+          <Card className="p-4 bg-primary text-white shadow-2xl border-2 border-white">
+            <div className="flex items-center gap-3">
+              <Icon name="MessageCircle" size={24} />
+              <div>
+                <div className="font-bold">Новое сообщение!</div>
+                <div className="text-sm opacity-90">Пользователь написал в чат</div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
       <div className="bg-white shadow-sm border-b p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Админ-панель - Чаты</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold">Админ-панель - Чаты</h1>
+            {unreadCount > 0 && (
+              <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">
+                {unreadCount} новых
+              </span>
+            )}
+          </div>
           <div className="flex gap-4 items-center">
+            <Button 
+              onClick={() => {
+                localStorage.setItem('admin_unread_count', '0');
+                setUnreadCount(0);
+              }}
+              variant="outline"
+              size="sm"
+            >
+              Отметить прочитанным
+            </Button>
             <a href="/" className="text-primary hover:underline">На главную</a>
             <Button onClick={handleLogout} variant="outline">
               <Icon name="LogOut" size={18} className="mr-2" />
