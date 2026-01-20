@@ -57,11 +57,7 @@ const Index = () => {
       title: 'Установка окон в частном доме',
       description: 'Комплексная замена всех окон',
     },
-    {
-      image: 'https://cdn.poehali.dev/projects/91022207-6de8-4436-b8df-267fcf1224c7/files/3a84a3b6-2122-4f5a-b65c-0025fb29479c.jpg',
-      title: 'Ремонт окон',
-      description: 'Восстановление эстетического вида окон',
-    },
+
     {
       image: 'https://cdn.poehali.dev/projects/91022207-6de8-4436-b8df-267fcf1224c7/files/55796747-f555-43c5-83af-fe1b84e6f09d.jpg',
       title: 'Качественные материалы',
@@ -104,7 +100,7 @@ const Index = () => {
             </div>
             <div className="hidden md:flex gap-6">
               <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
-              <a href="#products" className="hover:text-primary transition-colors">Товары</a>
+              <a href="#products" className="hover:text-primary transition-colors">Краска</a>
               <a href="#portfolio" className="hover:text-primary transition-colors">Портфолио</a>
               <a href="#about" className="hover:text-primary transition-colors">О нас</a>
               <a href="#faq" className="hover:text-primary transition-colors">FAQ</a>
@@ -137,7 +133,7 @@ const Index = () => {
               Пластиковые окна, краска и строительные работы
             </p>
             <p className="text-xl mb-10 text-slate-200 animate-slide-up">
-              Профессиональная установка и ремонт пластиковых окон с 2021 года
+              Профессиональная установка и ремонт пластиковых окон с 2020 года
             </p>
             <div className="flex flex-wrap gap-4 justify-center animate-slide-up">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
@@ -422,7 +418,7 @@ const Index = () => {
                 <Icon name="Home" size={28} />
                 <span className="text-xl font-bold">ООО "Эридан"</span>
               </div>
-              <p className="text-slate-400">Профессиональная установка и ремонт пластиковых окон с 2014 года</p>
+              <p className="text-slate-400">Профессиональная установка и ремонт пластиковых окон с 2020 года</p>
             </div>
             <div>
               <h3 className="font-bold mb-4">Услуги</h3>
@@ -433,8 +429,9 @@ const Index = () => {
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4">Компания</h3>
+              <h3 className="font-bold mb-4">Разделы</h3>
               <ul className="space-y-2 text-slate-400">
+                <li><a href="#products" className="hover:text-white transition-colors">Краска Саяночка</a></li>
                 <li><a href="#about" className="hover:text-white transition-colors">О нас</a></li>
                 <li><a href="#portfolio" className="hover:text-white transition-colors">Портфолио</a></li>
                 <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
@@ -451,7 +448,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
-            <p>&copy; 2024 ООО "Эридан". Все права защищены.</p>
+            <p>&copy; 2020-2025 ООО "Эридан". Все права защищены.</p>
           </div>
         </div>
       </footer>
