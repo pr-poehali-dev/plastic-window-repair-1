@@ -25,7 +25,6 @@ const Admin = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [messageInput, setMessageInput] = useState('');
   const [unreadCount, setUnreadCount] = useState(0);
-  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const authStatus = localStorage.getItem('admin_auth');
@@ -42,12 +41,6 @@ const Admin = () => {
       loadChats();
       const count = parseInt(localStorage.getItem('admin_unread_count') || '0');
       setUnreadCount(count);
-
-      const lastMessage = localStorage.getItem('admin_new_message');
-      if (lastMessage && Date.now() - parseInt(lastMessage) < 5000) {
-        setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 5000);
-      }
     }, 2000);
 
     return () => clearInterval(interval);
@@ -122,6 +115,23 @@ const Admin = () => {
     }, 100);
   };
 
+  const handleDeleteMessage = (messageId: string) => {
+    if (!selectedChat) return;
+
+    const updatedChats = chats.map(chat => {
+      if (chat.userId === selectedChat) {
+        return {
+          ...chat,
+          messages: chat.messages.filter(msg => msg.id !== messageId)
+        };
+      }
+      return chat;
+    });
+
+    setChats(updatedChats);
+    localStorage.setItem('admin_chats', JSON.stringify(updatedChats));
+  };
+
   const selectedChatData = chats.find(chat => chat.userId === selectedChat);
 
   if (!isAuthenticated) {
@@ -151,19 +161,6 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-slate-100">
-      {showNotification && (
-        <div className="fixed top-4 right-4 z-50 animate-slide-in">
-          <Card className="p-4 bg-primary text-white shadow-2xl border-2 border-white">
-            <div className="flex items-center gap-3">
-              <Icon name="MessageCircle" size={24} />
-              <div>
-                <div className="font-bold">Новое сообщение!</div>
-                <div className="text-sm opacity-90">Пользователь написал в чат</div>
-              </div>
-            </div>
-          </Card>
-        </div>
-      )}
       <div className="bg-white shadow-sm border-b p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
@@ -235,15 +232,21 @@ const Admin = () => {
                   {selectedChatData?.messages.map((msg) => (
                     <div
                       key={msg.id}
-                      className={`flex ${msg.from === 'admin' ? 'justify-end' : 'justify-start'}`}
+                      className={`flex group ${msg.from === 'admin' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[75%] p-3 rounded-lg ${
+                        className={`max-w-[75%] p-3 rounded-lg relative ${
                           msg.from === 'admin'
                             ? 'bg-primary text-white'
                             : 'bg-slate-200 text-slate-900'
                         }`}
                       >
+                        <button
+                          onClick={() => handleDeleteMessage(msg.id)}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                        >
+                          <Icon name="Trash2" size={14} />
+                        </button>
                         <div>{msg.text}</div>
                         <div className="text-xs opacity-75 mt-1">
                           {msg.timestamp.toLocaleTimeString('ru-RU')}
